@@ -9,7 +9,7 @@ import optimizers;
 import numpy        as np;
 import numpy.random as rd;
 
-class sim_anneal(optimizers.optimizer):				
+class sa_solver(optimizers.optimizer):				
     def iterate(self):
         #X_r = np.copy(self.X[-1,:]);
         for p in range(self.P):

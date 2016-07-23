@@ -6,7 +6,7 @@ Created on Thu Jun 23 22:14:02 2016
 """
 
 import de_solver;
-import sim_anneal;
+import sa_solver;
 
 import numpy        as np;
 import numpy.random as rd;
@@ -63,7 +63,7 @@ P    =  100;
 func = rosenbrock;
 
 #solver = de_solver.de_solver(func,low,high,P);
-solver = sim_anneal.sim_anneal(func,low,high,P);
+solver = sa_solver.sa_solver(func,low,high,P);
 
 def bound(x,l,h):
 	return np.mod(x-l,h-l)+l;

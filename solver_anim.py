@@ -5,7 +5,9 @@ Created on Thu Jun 23 22:14:02 2016
 @author: gionuno
 """
 
-import de_solver
+import de_solver;
+import sim_anneal;
+
 import numpy        as np;
 import numpy.random as rd;
 import matplotlib.pyplot    as plt;
@@ -21,6 +23,7 @@ def get_F(func_,low_,high_,N):
 			z[j,i] = func_(np.asarray([x[i],y[j]]));
 	return x,y,z;
 
+'''
 def styblinski_tang(x):
 	return 0.5*np.sum(x**4-16.*x**2+5.*x);
 
@@ -32,16 +35,18 @@ def holder_table(x):
 
 def cross_in_tray(x):
 	return -1e-4*np.power(np.abs(np.sin(x[0])*np.sin(x[1])*np.exp(np.abs(100.-np.linalg.norm(x)/np.pi))+1.),0.1);
+'''
 
 def rosenbrock(x):
 	return 100.*(x[1]-x[0]**2)**2+(1-x[0])**2;
 
+'''
 def ackley(x):
     D = x.shape[0];
     s = np.dot(x,x);
     t = np.sum(np.cos(2.*np.pi*x));
     return 20.+np.e-20.*np.exp(-0.2*np.sqrt(s/D))-np.exp(t/D); 
- 
+
 def langerman(x):
 	a = np.asarray([3,5,2,1,7]);
 	b = np.asarray([5,2,1,4,9]);
@@ -49,14 +54,16 @@ def langerman(x):
 	e = c*np.exp(-((x[0]-a)**2 + (x[1]-b)**2)/np.pi)
 	f = np.cos(np.pi*((x[0]-a)**2 + (x[1]-b)**2));
 	return np.dot(e,f);
+'''
 	
 low  = -10.*np.ones(2);
 high =  10.*np.ones(2);  
 P    =  100;
 
-func = holder_table;
+func = rosenbrock;
 
-solver = de_solver.de_solver(func,low,high,P);
+#solver = de_solver.de_solver(func,low,high,P);
+solver = sim_anneal.sim_anneal(func,low,high,P);
 
 def bound(x,l,h):
 	return np.mod(x-l,h-l)+l;
@@ -94,5 +101,5 @@ def update(i):
 	return scat;
 
 a = anm.FuncAnimation(fig,update,frames=300,interval=20);
-a.save('holder_table.mp4', fps=10, extra_args=['-vcodec', 'libx264'])
+a.save('rosenbrock_sim_anneal.mp4', fps=10, extra_args=['-vcodec', 'libx264'])
 plt.show();
